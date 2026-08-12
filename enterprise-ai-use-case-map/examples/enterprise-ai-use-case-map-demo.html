@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enterprise AI Use Case Map - HTML Output Template</title>
+  <link rel="icon" href="data:,">
+  <script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+    }
+    button, input, select { font: inherit; }
+    a { color: var(--cp-link); }
+    .shell { width: min(1440px, 100%); margin: 0 auto; padding: 24px; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--cp-overlay);
+      border-bottom: 1px solid var(--cp-border);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .nav {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      flex: 1;
+    }
+    .nav a {
+      color: var(--cp-text-muted);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 0.625rem;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .nav a:hover, .nav a:focus-visible {
+      color: var(--cp-accent);
+      background: var(--cp-accent-soft);
+      outline: none;
+    }
+    .actions { display: flex; gap: 8px; }
+    .button {
+      border: 1px solid var(--cp-border);
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      border-radius: 0.625rem;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .button:hover { border-color: var(--cp-border-strong); }
+    .button.primary {
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      border-color: var(--cp-accent);
+    }
+    .button.primary:hover { background: var(--cp-accent-hover); }
+    .hero {
+      padding: 56px 0 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.7fr);
+      gap: 24px;
+      align-items: end;
+    }
+    .eyebrow {
+      color: var(--cp-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 12px;
+    }
+    h1 {
+      margin: 8px 0 12px;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+    }
+    .hero p { max-width: 800px; color: var(--cp-text-muted); font-size: 18px; }
+    .meta-panel, .card {
+      background: var(--cp-surface);
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+    }
+    .meta-panel { padding: 20px; }
+    .meta-list { display: grid; gap: 12px; }
+    .meta-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--cp-border);
+    }
+    .meta-item:last-child { padding-bottom: 0; border-bottom: 0; }
+    .meta-label { color: var(--cp-text-muted); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 12px;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+    }
+    .badge.accent { border-color: var(--cp-accent); color: var(--cp-accent); background: var(--cp-accent-soft); }
+    .badge.success { color: var(--cp-success); }
+    .badge.warning { color: var(--cp-warning); }
+    .badge.danger { color: var(--cp-danger); }
+    .notice {
+      margin: 16px 0 0;
+      padding: 12px 14px;
+      border-left: 4px solid var(--cp-warning);
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+      border-radius: 0.625rem;
+    }
+    section { padding: 32px 0; scroll-margin-top: 84px; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(26px, 3vw, 38px);
+      letter-spacing: -0.03em;
+    }
+    .section-head p { margin: 0; color: var(--cp-text-muted); max-width: 680px; }
+    .grid { display: grid; gap: 16px; }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .card { padding: 20px; }
+    .card h3 { margin: 0 0 8px; font-size: 18px; }
+    .card p { color: var(--cp-text-muted); margin: 0; }
+    .metric { font-size: 30px; font-weight: 750; letter-spacing: -0.04em; }
+    .metric-label { color: var(--cp-text-muted); font-size: 13px; }
+    .signal {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .signal-index {
+      width: 28px;
+      height: 28px;
+      border-radius: 0.625rem;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+      font-weight: 700;
+    }
+    .list {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: var(--cp-text-muted);
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+    .flow-step {
+      position: relative;
+      padding: 16px;
+      min-height: 112px;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+    }
+    .flow-step strong { display: block; margin-bottom: 6px; }
+    .flow-step span { color: var(--cp-text-muted); font-size: 13px; }
+    .flow-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -12px;
+      top: 42%;
+      z-index: 2;
+      width: 14px;
+      color: var(--cp-accent);
+      font-weight: 700;
+    }
+    .outcome-tree { display: grid; gap: 10px; }
+    .outcome-row {
+      display: grid;
+      grid-template-columns: 1.1fr 1.2fr 1fr 1fr;
+      gap: 8px;
+      align-items: stretch;
+    }
+    .outcome-node {
+      padding: 14px;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+    }
+    .outcome-node small { display: block; color: var(--cp-text-muted); margin-bottom: 5px; }
+    .filters {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) repeat(3, minmax(150px, 0.35fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .control {
+      width: 100%;
+      border: 1px solid var(--cp-border);
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      border-radius: 0.625rem;
+      padding: 10px 12px;
+    }
+    .portfolio-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.7fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 880px; }
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--cp-border);
+      vertical-align: top;
+    }
+    th {
+      color: var(--cp-text-muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--cp-surface-soft);
+    }
+    tbody tr { cursor: pointer; }
+    tbody tr:hover, tbody tr:focus-visible { background: var(--cp-accent-soft); outline: none; }
+    tbody tr:last-child td { border-bottom: 0; }
+    .scenario-title { font-weight: 700; }
+    .scenario-sub { display: block; color: var(--cp-text-muted); font-size: 12px; margin-top: 3px; }
+    .detail-panel {
+      position: sticky;
+      top: 78px;
+      background: var(--cp-surface);
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .detail-panel h3 { margin: 8px 0 4px; font-size: 22px; }
+    .detail-grid { display: grid; gap: 12px; margin-top: 16px; }
+    .detail-item { padding-top: 10px; border-top: 1px solid var(--cp-border); }
+    .detail-item small { color: var(--cp-text-muted); display: block; margin-bottom: 4px; }
+    .portfolio-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .portfolio-box {
+      padding: 14px;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+    }
+    .portfolio-box strong { display: block; font-size: 20px; }
+    .portfolio-box span { color: var(--cp-text-muted); font-size: 12px; }
+    .heatmap {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .heat-cell {
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      padding: 14px;
+      background: var(--cp-surface);
+    }
+    .heat-cell.warning { border-left: 4px solid var(--cp-warning); }
+    .heat-cell.danger { border-left: 4px solid var(--cp-danger); }
+    .heat-cell.success { border-left: 4px solid var(--cp-success); }
+    .heat-cell small { color: var(--cp-text-muted); }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .wave {
+      border-top: 5px solid var(--cp-accent);
+      background: var(--cp-surface);
+      border-right: 1px solid var(--cp-border);
+      border-bottom: 1px solid var(--cp-border);
+      border-left: 1px solid var(--cp-border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .wave small { color: var(--cp-accent); font-weight: 700; }
+    .wave h3 { margin: 5px 0 10px; }
+    .meeting-loop {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .phase-label {
+      display: inline-block;
+      color: var(--cp-accent);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .empty {
+      display: none;
+      padding: 24px;
+      text-align: center;
+      color: var(--cp-text-muted);
+    }
+    .footer {
+      margin-top: 40px;
+      padding: 28px 0 56px;
+      border-top: 1px solid var(--cp-border);
+      color: var(--cp-text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .mono { font-family: Consolas, "Courier New", Courier, monospace; }
+
+    @media (max-width: 1050px) {
+      .grid-4, .heatmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .portfolio-layout { grid-template-columns: 1fr; }
+      .detail-panel { position: static; }
+      .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .flow-step::after { display: none; }
+    }
+    @media (max-width: 760px) {
+      .shell { padding: 16px; }
+      .topbar-inner { padding: 10px 16px; }
+      .nav { display: none; }
+      .hero { grid-template-columns: 1fr; padding-top: 36px; }
+      .grid-3, .grid-2, .timeline, .meeting-loop { grid-template-columns: 1fr; }
+      .grid-4, .heatmap { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .outcome-row { grid-template-columns: 1fr; }
+      .filters { grid-template-columns: 1fr; }
+      .portfolio-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-head { display: block; }
+      .section-head p { margin-top: 8px; }
+      .footer { display: block; }
+    }
+    @media print {
+      .topbar, .filters, .actions { display: none !important; }
+      body { background: var(--cp-surface); }
+      .shell { width: 100%; padding: 0; }
+      section { break-inside: avoid; }
+      .detail-panel { position: static; }
+      .card, .table-wrap, .detail-panel, .wave, .meta-panel { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Enterprise AI Map</div>
+      <nav class="nav" aria-label="报告章节">
+        <a href="#brief">Executive</a>
+        <a href="#enterprise">Enterprise 360</a>
+        <a href="#industry">Industry</a>
+        <a href="#outcomes">Outcomes</a>
+        <a href="#portfolio">Use Cases</a>
+        <a href="#readiness">Readiness</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#meeting">Meeting Loop</a>
+        <a href="#evidence">Evidence</a>
+      </nav>
+      <div class="actions">
+        <button class="button" id="themeToggle" type="button" aria-label="切换深浅主题">主题</button>
+        <button class="button primary" id="printReport" type="button">打印</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="report-title">
+      <div>
+        <div class="eyebrow">OpenClaw Skill Output Template</div>
+        <h1 id="report-title">示例客户<br>AI 场景与转型地图</h1>
+        <p>从行业与业务事实出发，将 AI 场景假设连接到业务成果、Trust、组织准备度、转型路径和高层决策。</p>
+        <div>
+          <span class="badge accent">事前学习 · Pre</span>
+          <span class="badge">Standard</span>
+          <span class="badge warning">演示数据 · 待客户验证</span>
+        </div>
+        <div class="notice">
+          本文件展示新 Skill 的报告结构和交互。所有企业、场景和状态均为模板占位，不构成客户事实、ROI承诺或实施建议。
+        </div>
+      </div>
+      <aside class="meta-panel" aria-label="报告元数据">
+        <div class="meta-list">
+          <div class="meta-item"><span class="meta-label">检索截止</span><strong>由 Skill 注入</strong></div>
+          <div class="meta-item"><span class="meta-label">证据范围</span><strong>Public / Authorized</strong></div>
+          <div class="meta-item"><span class="meta-label">报告版本</span><strong>v0.1 Template</strong></div>
+          <div class="meta-item"><span class="meta-label">敏感内容</span><strong>未写入</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="brief">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">01 · Executive Brief</div>
+          <h2>决策摘要</h2>
+        </div>
+        <p>这里不是产品摘要，而是高层需要确认、选择或否定的行业判断、业务优先级与近期决策。</p>
+      </div>
+      <div class="grid grid-4">
+        <article class="card">
+          <div class="metric">3</div>
+          <div class="metric-label">关键行业假设</div>
+        </article>
+        <article class="card">
+          <div class="metric">3</div>
+          <div class="metric-label">业务优先级</div>
+        </article>
+        <article class="card">
+          <div class="metric" id="scenarioTotal">6</div>
+          <div class="metric-label">候选 Use Cases</div>
+        </article>
+        <article class="card">
+          <div class="metric">4</div>
+          <div class="metric-label">待高层决定事项</div>
+        </article>
+      </div>
+      <div class="grid grid-3" style="margin-top:16px">
+        <article class="card signal">
+          <div class="signal-index">1</div>
+          <div>
+            <h3>行业压力</h3>
+            <p>待 Skill 根据行业经济、监管、竞争和客户战略生成有来源的判断。</p>
+          </div>
+        </article>
+        <article class="card signal">
+          <div class="signal-index">2</div>
+          <div>
+            <h3>价值焦点</h3>
+            <p>优先关注可测量的客户、运营、风险或创新成果，而不是 AI 数量。</p>
+          </div>
+        </article>
+        <article class="card signal">
+          <div class="signal-index">3</div>
+          <div>
+            <h3>近期决定</h3>
+            <p>确定要验证的场景、业务负责人、Trust 护栏和未来 90 天行动。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="enterprise">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">02 · Enterprise 360</div>
+          <h2>企业全景理解</h2>
+        </div>
+        <p>公开事实、授权资料、客户确认与分析假设必须分层呈现。</p>
+      </div>
+      <div class="grid grid-4">
+        <article class="card"><h3>行业与市场</h3><p>行业规模、利润池、竞争、增长和监管。</p></article>
+        <article class="card"><h3>业务模式</h3><p>客户、产品、收入模式、渠道与差异化。</p></article>
+        <article class="card"><h3>运营系统</h3><p>核心工作流、异常、等待、知识和决策节点。</p></article>
+        <article class="card"><h3>组织与人才</h3><p>决策权、技能、采用、变革能力和文化。</p></article>
+        <article class="card"><h3>数据与知识</h3><p>客户 IQ、数据质量、权限、知识资产和反馈。</p></article>
+        <article class="card"><h3>Trust</h3><p>安全、隐私、监管、人类监督和责任机制。</p></article>
+        <article class="card"><h3>数字成熟度</h3><p>现有能力、重复建设、运行模式和关键依赖。</p></article>
+        <article class="card"><h3>生态与伙伴</h3><p>供应商、合作伙伴、行业网络和构建/购买选择。</p></article>
+      </div>
+    </section>
+
+    <section id="industry">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">03 · Industry & Value Chain</div>
+          <h2>从行业到工作流</h2>
+        </div>
+        <p>Skill 将按客户实际业务替换以下占位环节，并标出高价值、高风险和高知识依赖节点。</p>
+      </div>
+      <div class="flow" aria-label="价值链示意">
+        <div class="flow-step"><strong>市场与客户</strong><span>需求、获客、洞察、体验</span></div>
+        <div class="flow-step"><strong>销售与方案</strong><span>机会、定价、合同、交接</span></div>
+        <div class="flow-step"><strong>交付与运营</strong><span>计划、执行、异常、质量</span></div>
+        <div class="flow-step"><strong>服务与增长</strong><span>支持、续约、交叉销售</span></div>
+        <div class="flow-step"><strong>企业支撑</strong><span>财务、HR、法务、IT、风险</span></div>
+      </div>
+    </section>
+
+    <section id="outcomes">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">04 · Outcome Tree</div>
+          <h2>业务优先级与成果树</h2>
+        </div>
+        <p>没有基线、负责人和反指标的条目只能作为假设，不能进入规模化承诺。</p>
+      </div>
+      <div class="outcome-tree">
+        <div class="outcome-row">
+          <div class="outcome-node"><small>战略优先级</small><strong>提升客户响应与体验</strong></div>
+          <div class="outcome-node"><small>运营成果</small>缩短复杂问题解决周期</div>
+          <div class="outcome-node"><small>护栏</small>质量、隐私、人工升级</div>
+          <div class="outcome-node"><small>负责人</small>待客户确认</div>
+        </div>
+        <div class="outcome-row">
+          <div class="outcome-node"><small>战略优先级</small><strong>提高运营韧性</strong></div>
+          <div class="outcome-node"><small>运营成果</small>更快识别和处理异常</div>
+          <div class="outcome-node"><small>护栏</small>误报、遗漏、审计记录</div>
+          <div class="outcome-node"><small>负责人</small>待客户确认</div>
+        </div>
+        <div class="outcome-row">
+          <div class="outcome-node"><small>战略优先级</small><strong>扩大专业知识复用</strong></div>
+          <div class="outcome-node"><small>运营成果</small>减少知识查找与重复解释</div>
+          <div class="outcome-node"><small>护栏</small>权限、时效、引用准确性</div>
+          <div class="outcome-node"><small>负责人</small>待客户确认</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">05 · Use Case Portfolio</div>
+          <h2>AI 场景组合</h2>
+        </div>
+        <p><span id="visibleCount">6</span> 个场景符合当前筛选。点击任一场景查看完整 Use Case Card。</p>
+      </div>
+      <div class="portfolio-summary">
+        <div class="portfolio-box"><strong id="countScale">0</strong><span>Scale Now</span></div>
+        <div class="portfolio-box"><strong id="countProve">3</strong><span>Prove Next</span></div>
+        <div class="portfolio-box"><strong id="countEnable">2</strong><span>Enable First</span></div>
+        <div class="portfolio-box"><strong id="countHold">1</strong><span>Hold / Stop</span></div>
+      </div>
+      <div class="filters" aria-label="场景筛选器">
+        <input class="control" id="searchInput" type="search" placeholder="搜索场景、业务环节或成果">
+        <select class="control" id="portfolioFilter" aria-label="组合类别">
+          <option value="">全部组合</option>
+          <option value="Prove Next">Prove Next</option>
+          <option value="Enable First">Enable First</option>
+          <option value="Hold/Stop">Hold/Stop</option>
+        </select>
+        <select class="control" id="riskFilter" aria-label="风险级别">
+          <option value="">全部风险</option>
+          <option value="低">低</option>
+          <option value="中">中</option>
+          <option value="高">高</option>
+        </select>
+        <select class="control" id="confidenceFilter" aria-label="置信度">
+          <option value="">全部置信度</option>
+          <option value="高">高</option>
+          <option value="中">中</option>
+          <option value="低">低</option>
+        </select>
+      </div>
+      <div class="portfolio-layout">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>场景</th>
+                <th>业务环节</th>
+                <th>目标成果</th>
+                <th>组合</th>
+                <th>风险</th>
+                <th>置信度</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody id="scenarioRows">
+              <tr tabindex="0" data-id="knowledge" data-portfolio="Prove Next" data-risk="中" data-confidence="高">
+                <td><span class="scenario-title">专业知识检索与回答辅助</span><span class="scenario-sub">Assist · Human reviewed</span></td>
+                <td>客户服务</td><td>缩短复杂问题查找时间</td><td><span class="badge accent">Prove Next</span></td><td><span class="badge warning">中</span></td><td>高</td><td>Hypothesized</td>
+              </tr>
+              <tr tabindex="0" data-id="anomaly" data-portfolio="Enable First" data-risk="高" data-confidence="中">
+                <td><span class="scenario-title">运营异常分析与分流</span><span class="scenario-sub">Augment · Decision support</span></td>
+                <td>运营</td><td>更快定位高影响异常</td><td><span class="badge">Enable First</span></td><td><span class="badge danger">高</span></td><td>中</td><td>Hypothesized</td>
+              </tr>
+              <tr tabindex="0" data-id="contract" data-portfolio="Prove Next" data-risk="高" data-confidence="中">
+                <td><span class="scenario-title">合同条款审阅辅助</span><span class="scenario-sub">Augment · Expert decision</span></td>
+                <td>法务</td><td>提高审阅一致性</td><td><span class="badge accent">Prove Next</span></td><td><span class="badge danger">高</span></td><td>中</td><td>Hypothesized</td>
+              </tr>
+              <tr tabindex="0" data-id="followup" data-portfolio="Prove Next" data-risk="低" data-confidence="中">
+                <td><span class="scenario-title">客户会议准备与跟进辅助</span><span class="scenario-sub">Assist · User controlled</span></td>
+                <td>销售</td><td>提高准备与承诺跟踪质量</td><td><span class="badge accent">Prove Next</span></td><td><span class="badge success">低</span></td><td>中</td><td>Hypothesized</td>
+              </tr>
+              <tr tabindex="0" data-id="pricing" data-portfolio="Hold/Stop" data-risk="高" data-confidence="低">
+                <td><span class="scenario-title">自主定价与折扣决策</span><span class="scenario-sub">Automate · High impact</span></td>
+                <td>定价</td><td>动态优化商业条件</td><td><span class="badge danger">Hold/Stop</span></td><td><span class="badge danger">高</span></td><td>低</td><td>Hypothesized</td>
+              </tr>
+              <tr tabindex="0" data-id="definitions" data-portfolio="Enable First" data-risk="中" data-confidence="中">
+                <td><span class="scenario-title">业务指标定义助手</span><span class="scenario-sub">Assist · Governed knowledge</span></td>
+                <td>数据与分析</td><td>提高指标解释一致性</td><td><span class="badge">Enable First</span></td><td><span class="badge warning">中</span></td><td>中</td><td>Hypothesized</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty" id="emptyState">没有符合当前条件的场景。</div>
+        </div>
+        <aside class="detail-panel" aria-live="polite">
+          <div class="eyebrow">Use Case Card</div>
+          <h3 id="detailTitle">选择一个场景</h3>
+          <p id="detailSummary">点击左侧任一行，查看问题、成果、人类角色、Trust 和下一决策门。</p>
+          <div class="detail-grid">
+            <div class="detail-item"><small>业务问题</small><span id="detailProblem">—</span></div>
+            <div class="detail-item"><small>AI 应做什么</small><span id="detailAi">—</span></div>
+            <div class="detail-item"><small>人类责任</small><span id="detailHuman">—</span></div>
+            <div class="detail-item"><small>Trust / 依赖</small><span id="detailTrust">—</span></div>
+            <div class="detail-item"><small>下一决策门</small><span id="detailGate">—</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="readiness">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">06 · Readiness & Trust</div>
+          <h2>准备度与信任热图</h2>
+        </div>
+        <p>颜色表示信息状态和注意级别，不代表已经完成正式评估。</p>
+      </div>
+      <div class="heatmap">
+        <div class="heat-cell warning"><strong>数据与知识</strong><br><small>待确认质量、权限与更新机制</small></div>
+        <div class="heat-cell warning"><strong>流程与基线</strong><br><small>待确认当前周期、质量和异常</small></div>
+        <div class="heat-cell danger"><strong>风险与监管</strong><br><small>高影响场景需正式风险评估</small></div>
+        <div class="heat-cell warning"><strong>人类监督</strong><br><small>待定义审批、升级和停止条件</small></div>
+        <div class="heat-cell warning"><strong>人才与采用</strong><br><small>待识别管理者和角色变化</small></div>
+        <div class="heat-cell success"><strong>业务所有权</strong><br><small>模板要求每个场景必须指定</small></div>
+        <div class="heat-cell warning"><strong>运营与支持</strong><br><small>待定义监控、反馈和退役</small></div>
+        <div class="heat-cell warning"><strong>价值衡量</strong><br><small>禁止用无来源行业数字代替</small></div>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">07 · Transformation Roadmap</div>
+          <h2>按业务成果组织的路径</h2>
+        </div>
+        <p>每一波都必须有继续、调整、停止或规模化的决策门。</p>
+      </div>
+      <div class="timeline">
+        <article class="wave">
+          <small>Wave 1</small>
+          <h3>证明价值与信任</h3>
+          <ul class="list">
+            <li>确认业务基线和负责人</li>
+            <li>验证低边界风险场景</li>
+            <li>建立人类监督与评估</li>
+          </ul>
+        </article>
+        <article class="wave">
+          <small>Wave 2</small>
+          <h3>重构流程与运营模式</h3>
+          <ul class="list">
+            <li>扩展至相邻工作流</li>
+            <li>调整角色、技能和管理机制</li>
+            <li>解决数据与治理依赖</li>
+          </ul>
+        </article>
+        <article class="wave">
+          <small>Wave 3</small>
+          <h3>规模化与持续学习</h3>
+          <ul class="list">
+            <li>复用能力并管理组合</li>
+            <li>持续观察价值、成本与风险</li>
+            <li>规模化、保留或退役</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="meeting">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">08 · Meeting Loop</div>
+          <h2>事前、事中、事后闭环</h2>
+        </div>
+        <p>事前生成的是假设；事中完成验证；事后形成持久的决策和行动版本。</p>
+      </div>
+      <div class="meeting-loop">
+        <article class="card">
+          <span class="phase-label">PRE · 事前</span>
+          <h3>学习与准备</h3>
+          <ul class="list">
+            <li>客户 360 与行业证据</li>
+            <li>业务优先级假设</li>
+            <li>按角色组织的问题地图</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="phase-label">DURING · 事中</span>
+          <h3>讨论与验证</h3>
+          <ul class="list">
+            <li>Confirmed / Rejected / Unknown</li>
+            <li>基线、负责人和反指标</li>
+            <li>异议、风险和决策记录</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="phase-label">POST · 事后</span>
+          <h3>跟进与行动</h3>
+          <ul class="list">
+            <li>优先 Use Case 组合</li>
+            <li>90 天行动和依赖</li>
+            <li>下次高层决策议题</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">09 · Evidence & Gaps</div>
+          <h2>证据、置信度与未知项</h2>
+        </div>
+        <p>关键判断必须可追溯；未知信息不得被自动补成客户事实。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>证据对象</th><th>来源类型</th><th>日期</th><th>置信度</th><th>客户确认</th><th>限制</th></tr></thead>
+          <tbody>
+            <tr><td>企业基本信息</td><td>企业官网 / 监管披露</td><td>待注入</td><td>待评估</td><td>否</td><td>需先完成实体消歧</td></tr>
+            <tr><td>行业与价值链</td><td>官方行业资料</td><td>待注入</td><td>待评估</td><td>否</td><td>公开资料不能证明内部流程</td></tr>
+            <tr><td>业务优先级</td><td>公开战略 / 客户访谈</td><td>待注入</td><td>待评估</td><td>待确认</td><td>必须由业务负责人验证</td></tr>
+            <tr><td>预测收益</td><td>客户基线推导</td><td>未知</td><td>低</td><td>否</td><td>本模板不提供通用ROI数字</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <strong>Enterprise AI Use Case Map</strong><br>
+        OpenClaw Skill HTML output template
+      </div>
+      <div class="mono">/enterprise-ai-use-case-map &lt;company&gt;</div>
+    </footer>
+  </main>
+
+  <noscript>
+    <div class="shell notice">JavaScript 已禁用。核心报告内容仍可阅读，但筛选、主题切换和场景详情交互不可用。</div>
+  </noscript>
+
+  <script>
+    const scenarioDetails = {
+      knowledge: {
+        title: "专业知识检索与回答辅助",
+        summary: "帮助服务人员从受控知识中查找并形成可引用的回答草稿。",
+        problem: "复杂问题需要跨多个知识源查找，当前基线待客户确认。",
+        ai: "检索授权知识、总结相关内容并生成带来源的答复草稿。",
+        human: "核验内容、判断客户情境、批准或修改最终答复。",
+        trust: "知识权限、来源时效、引用准确性、敏感信息和升级机制。",
+        gate: "G1：确认问题频次、基线、知识权限和业务负责人。"
+      },
+      anomaly: {
+        title: "运营异常分析与分流",
+        summary: "对运营信号进行归类、关联和优先级建议，辅助专业人员处理异常。",
+        problem: "异常数量、处理周期和高影响事件比例均待客户提供。",
+        ai: "汇总信号、发现模式、建议优先级和可能原因。",
+        human: "确认影响、选择处置措施，并对高风险决定负责。",
+        trust: "漏报、误报、审计记录、数据时效和人工接管。",
+        gate: "Enable First：先确认数据、风险分类和处置流程。"
+      },
+      contract: {
+        title: "合同条款审阅辅助",
+        summary: "识别偏离标准的条款并向法务人员提供审阅线索。",
+        problem: "合同数量、审阅周期、返工和风险事件尚未确认。",
+        ai: "对照批准的规则与模板，标注差异并整理待审问题。",
+        human: "法律判断、谈判建议和最终批准必须由合格人员承担。",
+        trust: "法律责任、管辖差异、保密、模型错误和版本控制。",
+        gate: "G1：由法务定义允许范围、标准条款和停止条件。"
+      },
+      followup: {
+        title: "客户会议准备与跟进辅助",
+        summary: "整合授权信息形成会前简报、承诺清单和会后草稿。",
+        problem: "信息分散导致准备不一致，实际耗时和漏项率待确认。",
+        ai: "汇总授权信息、提炼议题、形成问题和行动草稿。",
+        human: "选择可分享内容、判断语境并确认所有外发消息。",
+        trust: "权限、敏感标签、私有日程信息和发送前确认。",
+        gate: "G1：明确数据范围、目标用户和采用指标。"
+      },
+      pricing: {
+        title: "自主定价与折扣决策",
+        summary: "当前信息不足且影响重大，模板建议保持 Hold/Stop。",
+        problem: "商业目标、授权边界、公平性、竞争和监管影响均未知。",
+        ai: "在正式批准前仅可用于受控分析，不执行定价决定。",
+        human: "保留商业决策、例外审批和责任。",
+        trust: "高业务影响、潜在歧视、合规、客户关系和竞争风险。",
+        gate: "Hold：除非完成正式风险评估、基线和授权设计。"
+      },
+      definitions: {
+        title: "业务指标定义助手",
+        summary: "帮助员工查找受治理的指标定义、负责人和适用范围。",
+        problem: "跨部门指标定义不一致的程度和影响待验证。",
+        ai: "检索批准的数据目录和定义，解释差异并引用来源。",
+        human: "数据治理负责人批准定义，业务人员决定使用情境。",
+        trust: "定义版本、权限、数据血缘和过期内容。",
+        gate: "Enable First：先建立可靠的指标目录与所有权。"
+      }
+    };
+
+    const rows = Array.from(document.querySelectorAll("#scenarioRows tr"));
+    const searchInput = document.getElementById("searchInput");
+    const portfolioFilter = document.getElementById("portfolioFilter");
+    const riskFilter = document.getElementById("riskFilter");
+    const confidenceFilter = document.getElementById("confidenceFilter");
+    const visibleCount = document.getElementById("visibleCount");
+    const emptyState = document.getElementById("emptyState");
+
+    function applyFilters() {
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      let count = 0;
+      rows.forEach((row) => {
+        const matchesQuery = !query || row.textContent.toLocaleLowerCase().includes(query);
+        const matchesPortfolio = !portfolioFilter.value || row.dataset.portfolio === portfolioFilter.value;
+        const matchesRisk = !riskFilter.value || row.dataset.risk === riskFilter.value;
+        const matchesConfidence = !confidenceFilter.value || row.dataset.confidence === confidenceFilter.value;
+        const visible = matchesQuery && matchesPortfolio && matchesRisk && matchesConfidence;
+        row.hidden = !visible;
+        if (visible) count += 1;
+      });
+      visibleCount.textContent = String(count);
+      emptyState.style.display = count === 0 ? "block" : "none";
+    }
+
+    [searchInput, portfolioFilter, riskFilter, confidenceFilter].forEach((control) => {
+      control.addEventListener("input", applyFilters);
+      control.addEventListener("change", applyFilters);
+    });
+
+    function showDetails(id) {
+      const detail = scenarioDetails[id];
+      if (!detail) return;
+      document.getElementById("detailTitle").textContent = detail.title;
+      document.getElementById("detailSummary").textContent = detail.summary;
+      document.getElementById("detailProblem").textContent = detail.problem;
+      document.getElementById("detailAi").textContent = detail.ai;
+      document.getElementById("detailHuman").textContent = detail.human;
+      document.getElementById("detailTrust").textContent = detail.trust;
+      document.getElementById("detailGate").textContent = detail.gate;
+    }
+
+    rows.forEach((row) => {
+      row.addEventListener("click", () => showDetails(row.dataset.id));
+      row.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          showDetails(row.dataset.id);
+        }
+      });
+    });
+
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      document.documentElement.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+    });
+
+    document.getElementById("printReport").addEventListener("click", () => window.print());
+  </script>
+</body>
+</html>
