@@ -1,0 +1,101 @@
+schema_version: 1
+run_id: "replace-with-run-id"
+plan_version: 1
+title: "replace-with-title"
+objective: "完成什么、交付到哪里、在什么边界内、如何验收"
+audience_and_use: "replace"
+deliverables:
+  - id: D1
+    path: "artifacts/longtask/replace/results/replace"
+    format: "replace"
+    minimum_content: "replace"
+inputs:
+  - source: "replace"
+    required_coverage: "replace"
+scope:
+  in_scope: []
+  out_of_scope: []
+boundaries:
+  allowed_reads: []
+  allowed_writes:
+    - "artifacts/longtask/replace/**"
+    - "artifacts/plan.yaml"
+    - "artifacts/status.json"
+  forbidden_actions:
+    - "删除或覆盖源数据"
+    - "未经确认的外部发送、发布、交易或付费"
+  external_side_effects:
+    allowed: false
+    per_action_approval: true
+success_criteria:
+  - id: C1
+    criterion: "replace-with-observable-condition"
+    evidence: "replace-with-proof-path-or-check"
+constraints:
+  deadline: null
+  confidentiality: "do-not-record-secrets"
+  cost_or_model: "use configured models; ACP only GitHub Copilot when explicitly available"
+assumptions: []
+execution:
+  controller_mode: "orchestration_only"
+  max_parallel_workers: 2
+  worker_policy:
+    preferred:
+      - "native_isolated_subagent"
+      - "background_task"
+      - "github_copilot_acp_if_discovered"
+    forbidden_acp:
+      - "codex"
+      - "claude"
+      - "gemini"
+      - "opencode"
+  read_limits:
+    max_chars_per_text_result: 20000
+    max_chars_per_worker_turn: 80000
+    max_lines_per_read: 200
+    max_parallel_large_queries: 2
+  retry_policy:
+    max_retries_per_task: 2
+    verify_side_effects_before_retry: true
+  supervisor:
+    interval_minutes: 5
+    progress_surface: "progress_card_each_tick"
+    chat_policy: "state-change-recovery-blocker-or-completion"
+artifacts:
+  run_dir: "artifacts/longtask/replace"
+  manifest: "artifacts/longtask/replace/manifest.json"
+  receipts_dir: "artifacts/longtask/replace/receipts"
+  results_dir: "artifacts/longtask/replace/results"
+  errors_dir: "artifacts/longtask/replace/errors"
+  verification_dir: "artifacts/longtask/replace/verification"
+tasks:
+  - id: T001
+    title: "replace"
+    outcome: "replace-with-one-verifiable-outcome"
+    depends_on: []
+    worker:
+      kind: "auto"
+      context: "isolated"
+    inputs:
+      sources: []
+      assigned_range: null
+      shard_strategy: null
+    outputs:
+      - "artifacts/longtask/replace/results/T001"
+    verify:
+      method: "replace"
+      evidence: "replace"
+    side_effects:
+      class: "none"
+      allowed: []
+    idempotency:
+      key_template: "replace:T001:<attempt>:<range>"
+      duplicate_check: "check receipt and output hash"
+    failure_policy:
+      max_retries: 2
+      on_overflow: "shrink shard and resume next_range"
+      on_ambiguous_side_effect: "block"
+final_verification:
+  independent_worker: true
+  covers_all_success_criteria: true
+  output: "artifacts/longtask/replace/verification/final.json"

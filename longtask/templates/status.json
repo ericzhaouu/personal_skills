@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "run_id": "replace-with-run-id",
+  "run_dir": "artifacts/longtask/replace-with-run-id",
+  "revision": 0,
+  "plan_version": 1,
+  "plan_sha256": "replace-with-64-hex-sha256",
+  "lifecycle": "planning",
+  "current_stage": "planning",
+  "goal": {
+    "goal_id": null,
+    "objective": "replace",
+    "status": "active"
+  },
+  "approval": {
+    "required": true,
+    "state": "pending",
+    "confirmed_plan_sha256": null,
+    "confirmed_at": null,
+    "confirmed_message_id": null
+  },
+  "progress": {
+    "total": 0,
+    "completed": 0,
+    "running": 0,
+    "failed": 0,
+    "blocked": 0,
+    "percent": 0
+  },
+  "completed_task_ids": [],
+  "ready_task_ids": [],
+  "active_task_ids": [],
+  "blocked_task_ids": [],
+  "next_actions": [],
+  "tasks": {},
+  "task_status_index_path": "artifacts/longtask/replace-with-run-id/task-status-index.json",
+  "supervisor": {
+    "automation_job_id": null,
+    "interval_minutes": 5,
+    "last_check_at": null,
+    "next_check_at": null,
+    "last_progress_at": null,
+    "consecutive_stale_checks": 0,
+    "last_recovery_action": null,
+    "chat_policy": "progress-card-each-tick; chat-on-transition-recovery-blocker-completion"
+  },
+  "artifacts": {
+    "manifest_path": "artifacts/longtask/replace-with-run-id/manifest.json",
+    "receipts_dir": "artifacts/longtask/replace-with-run-id/receipts",
+    "results_dir": "artifacts/longtask/replace-with-run-id/results",
+    "errors_dir": "artifacts/longtask/replace-with-run-id/errors",
+    "verification_path": "artifacts/longtask/replace-with-run-id/verification/final.json"
+  },
+  "recovery": {
+    "resume_phase": "planning",
+    "resume_task_ids": [],
+    "resume_cursor": null,
+    "last_safe_revision": 0,
+    "reason": null
+  },
+  "final_verification": {
+    "state": "pending",
+    "criteria": [],
+    "evidence_paths": [],
+    "verified_at": null,
+    "worker_ref": null
+  },
+  "external_side_effects": [],
+  "last_error": null,
+  "recent_events": [],
+  "created_at": "replace-with-ISO-8601",
+  "updated_at": "replace-with-ISO-8601"
+}
