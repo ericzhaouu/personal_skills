@@ -6,3 +6,4 @@
 | [`longtask`](longtask/) | 把复杂长任务拆成经确认的可恢复计划，并通过隔离 Worker、定时监督、失败恢复和独立验收持续执行到可验证完成。 |
 | [`tikhub`](tikhub/) | 通过 TikHub 读取六个平台的公开内容，支持有边界的搜索、账号帖子和分页，保留原始响应并提供安全错误处理。 |
 | [`vectorengine-media-gen`](vectorengine-media-gen/) | 通过 RelayRouter 调用四个精选图片模型，默认 GPT Image 2.5 Flare，提供环境变量鉴权、受控回退和图片文件校验。 |
+| [`content-distill`](content-distill/) | 提炼保留核心判断、机制、证据和边界的文章精华，版式自适应；微信正文复用新版 TikHub，不强制卡片、问答或作业。 |
