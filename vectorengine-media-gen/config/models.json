@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 2,
+  "baseUrl": "https://api.relayrouter.ai",
+  "allowedApiHosts": [
+    "api.relayrouter.ai"
+  ],
+  "defaultModel": "gpt-image-2.5-flare",
+  "image": {
+    "gpt-image-2.5-flare": {
+      "modelId": "gpt-image-2.5-flare",
+      "family": "gpt-images",
+      "protocol": "gpt-images-v1",
+      "endpoint": "/v1/images/generations",
+      "defaults": {
+        "format": "png",
+        "quality": "auto",
+        "response_format": "b64_json"
+      },
+      "notes": "Default approved GPT image model."
+    },
+    "gpt-image-2.5-sunburst": {
+      "modelId": "gpt-image-2.5-sunburst",
+      "family": "gpt-images",
+      "protocol": "gpt-images-v1",
+      "endpoint": "/v1/images/generations",
+      "defaults": {
+        "format": "png",
+        "quality": "auto",
+        "response_format": "b64_json"
+      },
+      "notes": "Approved higher-fidelity GPT image model."
+    },
+    "gemini-3.1-flash-image": {
+      "modelId": "gemini-3.1-flash-image",
+      "family": "gemini-native",
+      "protocol": "gemini-generate-content",
+      "endpoint": "/v1beta/models/{model}:generateContent",
+      "notes": "Exact user-approved ID confirmed in authenticated model catalog; native Gemini protocol."
+    },
+    "doubao-seedream-5-0-pro-260628": {
+      "modelId": "doubao-seedream-5-0-pro-260628",
+      "family": "seedream-native",
+      "protocol": "seedream-v3",
+      "endpoint": "/api/v3/images/generations",
+      "defaults": {
+        "output_format": "png",
+        "response_format": "b64_json",
+        "watermark": false
+      },
+      "notes": "Final image response verified; task-only responses remain pending without guessed polling."
+    }
+  }
+}
